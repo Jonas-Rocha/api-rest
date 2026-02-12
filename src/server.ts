@@ -40,6 +40,7 @@ obs: o npx também consegue executar pacotes que estão registrados la no npm, e
 
 TSX:
 ficar sempre compilando o typescript para javascript é pouco prático, então o tsx serve para nos ajudar com isso
+* A ferramenta tsx (ou o módulo ts-node de forma geral) é amplamente utilizada para executar arquivos TypeScript diretamente no ambiente Node.js, sem a necessidade de uma etapa de compilação manual prévia. Ela faz a transcompilação em tempo real, agilizando o processo de desenvolvimento e teste.
 
 npm i tsx@4.16.2 -D
 
