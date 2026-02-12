@@ -39,12 +39,24 @@ obs: o npx também consegue executar pacotes que estão registrados la no npm, e
 ---------------------------------------------------------------------------------------------------------------------------
 
 TSX:
+ficar sempre compilando o typescript para javascript é pouco prático, então o tsx serve para nos ajudar com isso
 
 npm i tsx@4.16.2 -D
 
+criamos logo em seguida no package.json:
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  }
+
+  "watch" server para observar o arquivo src/server.ts
 
 
 
+
+
+npm tsc --init
+
+cria o arquivo de configuração do TypeScript (tsconfig.json)
 
 */
 
