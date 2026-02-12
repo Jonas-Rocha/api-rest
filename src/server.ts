@@ -21,6 +21,30 @@ isso explica primeira anotação la em cima que diz que o typescript é apenas p
 afinal, ele não é muito compativel com o node, então precisamos converter para javascript antes de colocar em produção.
 o typescript é apenas para conseguirmos fazer tudo muito bem estruturado e não deixar erros.
 
+npm = node package manager = gerenciador de pacotes
+npx = node package execute = "executa pacotes"
+
+
+npx tsc src/server.js   <<<< esse comando simplesmente executa o binário  da pasta node_modules/.bin/tsc
+e esse binário é reponsavel por converter o arquivo.
+
+como o npx é um "rodador" de pacotes, ao invés de usar o npx tsc src/server.ts,
+poderiamos simplesmente rodar no terminal o caminho do arquivo binario:  node_modules/.bin/tsc src/server.ts  <<<< isso ja converteria o código
+
+
+obs: o npx também consegue executar pacotes que estão registrados la no npm, e não necessariamente pacotes que estejam só na minha maquina.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+TSX:
+
+npm i tsx@4.16.2 -D
+
+
+
+
 
 */
 
@@ -28,6 +52,6 @@ function sum(a: number, b: number): number {
   return a + b;
 }
 
-const result: number = sum(5, 3);
+const result: number = sum(7, 3);
 
 console.log(result);
