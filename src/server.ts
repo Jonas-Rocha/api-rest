@@ -59,7 +59,34 @@ npm tsc --init
 
 cria o arquivo de configuração do TypeScript (tsconfig.json)
 
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------
+
+EXPRESS:
+
+O Express é um framework flexível e minimalista para o Node, focado em lidar com requisições e respostas. 
+Ele oferece recursos prontos para lidar com parâmetros, query params, route params e JSON no corpo da requisição, 
+facilitando o desenvolvimento de APIs. Com o Express, é possível criar uma API robusta com agilidade,
+aproveitando sua estrutura de roteamento leve e flexível, que pode ser estendida com middlers. 
+Essas características tornam o Express uma ferramenta poderosa para o desenvolvimento de aplicações.
+
+
+
+npm i express@4.19.2  <<<< versão utilizada do express
+
+npm i --save-dev @types/express   <<<< assim como no na instalação da tipagem do node, 
+agumas bibliotecas precisam que eu instale a tipagem delas separadamente. o express é um exemplo disso.
+
+
+
+
 */
+
+import express from "express";
 
 function sum(a: number, b: number): number {
   return a + b;
