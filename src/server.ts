@@ -100,15 +100,26 @@ se eu coloco "/x" por exemplo, vai dar erro o erro "Cannot GET /" no navegador, 
 ou seja, o express já lida automaticamente com rotas que não existem. Bem mais prático do que ficar fazendo if else para fazer verificação com node puro.
 */
 
-app.get("/products/:id/:user", (request, response) => {
+app.get("/products", (request, response) => {
   /*
+  ESTE COMENTÁRIO É REFERENTE A AULA DE ROUTE PARAMS (parametros não nomeados)
+
   assim eu conseguria facilmente acessar as os parametros de rotas (as proprias rotas)
   sem precisar fazer com regex na mão igual fiz com node puro.
   */
 
-  const { id, user } = request.params;
+  /*
+  depois da interrogação estamos passando parametros(nomeados, query)
+  esses parametros(nomeados, query) são opcionais, mesmo se eu fizesse uma requisição usando o .get("/products"),
+  e no navegador eu colocar /products?page=1&limit=10, ele não retornaria erro, pois são opcionais. diferentemente do /products/:id que é obrigatório.
 
-  response.send(`Produto ${id} do usuário ${user}`);
+  /products?page=1&limit=10
+
+   */
+
+  const { page, limit } = request.query;
+
+  response.send(`Página ${page} de ${limit}`);
 });
 
 // app.  <<<< dar uma olhada nas funções dispolibilizada pelo express depois.
