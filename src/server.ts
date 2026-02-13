@@ -88,10 +88,9 @@ agumas bibliotecas precisam que eu instale a tipagem delas separadamente. o expr
 
 import express from "express";
 
-function sum(a: number, b: number): number {
-  return a + b;
-}
+// estou criando a variavel da porta pois se eu quiser mudar futuramente basta eu mudar o valor desta variavel que todo o resto sera mudado
+const PORT = 3333;
 
-const result: number = sum(7, 3);
-
-console.log(result);
+const app = express();
+// app.  <<<< dar uma olhada nas funções dispolibilizada pelo express depois.
+app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
