@@ -92,5 +92,16 @@ import express from "express";
 const PORT = 3333;
 
 const app = express();
+
+// esse "/" é indicando a rota para a raiz do projeto.
+
+/*
+se eu coloco "/x" por exemplo, vai dar erro o erro "Cannot GET /" no navegador, pois não existe essa rota(arquivo ou pasta) no projeto ainda;
+ou seja, o express já lida automaticamente com rotas que não existem. Bem mais prático do que ficar fazendo if else para fazer verificação com node puro.
+*/
+app.get("/x", (request, response) => {
+  response.send("Hello world Express!");
+});
+
 // app.  <<<< dar uma olhada nas funções dispolibilizada pelo express depois.
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
