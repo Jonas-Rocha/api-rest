@@ -146,7 +146,7 @@ app.post("/products", myMiddleware, (request, response) => {
   //response.send(`Produto ${name} Preço ${price}`);
 
   //aqui eu estou mudando o content-type do header. todo o conteudo da resposta é convertido já para JSON.
-  response.status(201).json({ name, price });
+  response.status(201).json({ name, price, user_id: request.user_id });
 });
 
 // app.  <<<< dar uma olhada nas funções dispolibilizada pelo express depois.
