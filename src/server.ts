@@ -133,7 +133,10 @@ app.get("/products", (request, response) => {
 app.post("/products", (request, response) => {
   const { name, price } = request.body;
 
-  response.send(`Produto ${name} Preço ${price}`);
+  //response.send(`Produto ${name} Preço ${price}`);
+
+  //aqui eu estou mudando o content-type do header. todo o conteudo da resposta é convertido já para JSON.
+  response.status(201).json({ name, price });
 });
 
 // app.  <<<< dar uma olhada nas funções dispolibilizada pelo express depois.
