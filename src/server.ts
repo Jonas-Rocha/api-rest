@@ -93,6 +93,12 @@ const PORT = 3333;
 
 const app = express();
 
+/*
+Não existe apenas JSON como formato de dados para uma API, existem outros. como XML(que parece muito com HTML), por exemplo.
+Então, para não dar erro, preciso declarar o "tipo de dado" que minha api vai usar para forncer os dados. se não, vai dar erro.
+*/
+app.use(express.json());
+
 // esse "/" é indicando a rota para a raiz do projeto.
 
 /*
@@ -101,6 +107,8 @@ ou seja, o express já lida automaticamente com rotas que não existem. Bem mais
 */
 
 app.get("/products", (request, response) => {
+  // OBS: POR PADRÃO O NAVEGADOR NÃO FAZ REQUISIÇÃO DO TIPO "POST", POR EXEMPLO. APENAS "GET", ENTÃO PARA TESTAR OUTROS TEM QUE SER FORA DO NAVEGADOR
+
   /*
   ESTE COMENTÁRIO É REFERENTE A AULA DE ROUTE PARAMS (parametros não nomeados)
 
@@ -120,6 +128,12 @@ app.get("/products", (request, response) => {
   const { page, limit } = request.query;
 
   response.send(`Página ${page} de ${limit}`);
+});
+
+app.post("/products", (request, response) => {
+  const { name, price } = request.body;
+
+  response.send(`Produto ${name} Preço ${price}`);
 });
 
 // app.  <<<< dar uma olhada nas funções dispolibilizada pelo express depois.
