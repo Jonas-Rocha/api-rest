@@ -87,6 +87,7 @@ agumas bibliotecas precisam que eu instale a tipagem delas separadamente. o expr
 */
 
 import express from "express";
+import { myMiddleware } from "./middlewares/my-middleware"; //não precisa colocar a extensão do arquivo no TYPESCRIPT.
 
 // estou criando a variavel da porta pois se eu quiser mudar futuramente basta eu mudar o valor desta variavel que todo o resto sera mudado
 const PORT = 3333;
@@ -98,6 +99,10 @@ Não existe apenas JSON como formato de dados para uma API, existem outros. como
 Então, para não dar erro, preciso declarar o "tipo de dado" que minha api vai usar para forncer os dados. se não, vai dar erro.
 */
 app.use(express.json());
+
+// Usando o "myMiddleware" de forma global. agora qualquer requisição do app passará por aqui.
+// É importante o Middleware global estar sempre antes(acima) da rota no código, se não, ele não executa.
+app.use(myMiddleware);
 
 // esse "/" é indicando a rota para a raiz do projeto.
 
