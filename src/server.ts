@@ -102,7 +102,7 @@ app.use(express.json());
 
 // Usando o "myMiddleware" de forma global. agora qualquer requisição do app passará por aqui.
 // É importante o Middleware global estar sempre antes(acima) da rota no código, se não, ele não executa.
-app.use(myMiddleware);
+//app.use(myMiddleware);
 
 // esse "/" é indicando a rota para a raiz do projeto.
 
@@ -135,7 +135,12 @@ app.get("/products", (request, response) => {
   response.send(`Página ${page} de ${limit}`);
 });
 
-app.post("/products", (request, response) => {
+/*
+assim se chama um middleware localmente, sempre com virgula depois da rota, e antes da função a ser executada.
+OBS: a função "Next" do myMiddleware é repoonsável por excutar a proxima função (request, response), no caso.
+Mas, ela poderia chamar outro middleware logo depois do primeiro se eu quisesse, teria apenas que adicionar outra virgula.
+*/
+app.post("/products", myMiddleware, (request, response) => {
   const { name, price } = request.body;
 
   //response.send(`Produto ${name} Preço ${price}`);
