@@ -86,7 +86,7 @@ agumas bibliotecas precisam que eu instale a tipagem delas separadamente. o expr
 
 */
 
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { myMiddleware } from "./middlewares/my-middleware"; //não precisa colocar a extensão do arquivo no TYPESCRIPT.
 import { routes } from "./routes/index";
 
@@ -100,5 +100,12 @@ app.use(express.json());
 //tenho que chamar as rotas aqui para que funcione.
 //esse app.use(routes) esta chamando o index.ts(routes), e o index.ts(routes) vai chamar o products-routes.ts(routes)
 app.use(routes);
+
+//o tratamento de erros deve vir sempre por ultimo no código pois ele consegue capturar qualquer exceção que acontecer nos blocos de código acima.
+app.use(
+  (error: any, request: Request, response: Response, next: NextFunction) => {
+    response.status(500).json({ message: error.message });
+  },
+);
 
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
