@@ -88,66 +88,17 @@ agumas bibliotecas precisam que eu instale a tipagem delas separadamente. o expr
 
 import express from "express";
 import { myMiddleware } from "./middlewares/my-middleware"; //não precisa colocar a extensão do arquivo no TYPESCRIPT.
+import { routes } from "./routes/index";
 
 // estou criando a variavel da porta pois se eu quiser mudar futuramente basta eu mudar o valor desta variavel que todo o resto sera mudado
 const PORT = 3333;
 
 const app = express();
 
-/*
-Não existe apenas JSON como formato de dados para uma API, existem outros. como XML(que parece muito com HTML), por exemplo.
-Então, para não dar erro, preciso declarar o "tipo de dado" que minha api vai usar para forncer os dados. se não, vai dar erro.
-*/
 app.use(express.json());
 
-// Usando o "myMiddleware" de forma global. agora qualquer requisição do app passará por aqui.
-// É importante o Middleware global estar sempre antes(acima) da rota no código, se não, ele não executa.
-//app.use(myMiddleware);
+//tenho que chamar as rotas aqui para que funcione.
+//esse app.use(routes) esta chamando o index.ts(routes), e o index.ts(routes) vai chamar o products-routes.ts(routes)
+app.use(routes);
 
-// esse "/" é indicando a rota para a raiz do projeto.
-
-/*
-se eu coloco "/x" por exemplo, vai dar erro o erro "Cannot GET /" no navegador, pois não existe essa rota(arquivo ou pasta) no projeto ainda;
-ou seja, o express já lida automaticamente com rotas que não existem. Bem mais prático do que ficar fazendo if else para fazer verificação com node puro.
-*/
-
-app.get("/products", (request, response) => {
-  // OBS: POR PADRÃO O NAVEGADOR NÃO FAZ REQUISIÇÃO DO TIPO "POST", POR EXEMPLO. APENAS "GET", ENTÃO PARA TESTAR OUTROS TEM QUE SER FORA DO NAVEGADOR
-
-  /*
-  ESTE COMENTÁRIO É REFERENTE A AULA DE ROUTE PARAMS (parametros não nomeados)
-
-  assim eu conseguria facilmente acessar as os parametros de rotas (as proprias rotas)
-  sem precisar fazer com regex na mão igual fiz com node puro.
-  */
-
-  /*
-  depois da interrogação estamos passando parametros(nomeados, query)
-  esses parametros(nomeados, query) são opcionais, mesmo se eu fizesse uma requisição usando o .get("/products"),
-  e no navegador eu colocar /products?page=1&limit=10, ele não retornaria erro, pois são opcionais. diferentemente do /products/:id que é obrigatório.
-
-  /products?page=1&limit=10
-
-   */
-
-  const { page, limit } = request.query;
-
-  response.send(`Página ${page} de ${limit}`);
-});
-
-/*
-assim se chama um middleware localmente, sempre com virgula depois da rota, e antes da função a ser executada.
-OBS: a função "Next" do myMiddleware é repoonsável por excutar a proxima função (request, response), no caso.
-Mas, ela poderia chamar outro middleware logo depois do primeiro se eu quisesse, teria apenas que adicionar outra virgula.
-*/
-app.post("/products", myMiddleware, (request, response) => {
-  const { name, price } = request.body;
-
-  //response.send(`Produto ${name} Preço ${price}`);
-
-  //aqui eu estou mudando o content-type do header. todo o conteudo da resposta é convertido já para JSON.
-  response.status(201).json({ name, price, user_id: request.user_id });
-});
-
-// app.  <<<< dar uma olhada nas funções dispolibilizada pelo express depois.
 app.listen(PORT, () => console.log(`Server is running at ${PORT}`));
