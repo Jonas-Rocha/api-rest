@@ -1,23 +1,18 @@
 //importando o "Router" do proprio express para lidar com rotas. Usar os metodos .get(), .post(), por exemplo...
+//ARQUIVO RESPONSAVEL APENAS PELO "ROTEAMENTO". lidar com o que as rotas fazem é no arquivo de controllers.
 import { Router } from "express";
 import { myMiddleware } from "../middlewares/my-middleware";
+import { ProductsController } from "../controllers/ProductsController";
 
 const productsRoutes = Router();
+const productsController = new ProductsController();
 
 // Aqui eu estou colocando apenas "/" e não "/products" para o router não duplicar o caminho que ja esta sendo referenciado no index.ts(routes)
-productsRoutes.get("/:id", (request, response) => {
-  const { page, limit } = request.query;
-  const { id } = request.params;
-
-  response.send(`Página ${page} de ${limit} -- ID: ${id}`);
-});
+// Estou usando productsController.index por que não preciso usar o request response, pois já criei o metodo "index" la nos controllers.
+productsRoutes.get("/", productsController.index);
 
 // Aqui eu estou colocando apenas "/" e não "/products" para o router não duplicar o caminho que ja esta sendo referenciado no index.ts(routes)
-productsRoutes.post("/", myMiddleware, (request, response) => {
-  const { name, price } = request.body;
-
-  //aqui eu estou mudando o content-type do header. todo o conteudo da resposta é convertido já para JSON.
-  response.status(201).json({ name, price, user_id: request.user_id });
-});
+// Estou usando productsController.create por que não preciso usar o request response, pois já criei o metodo "create" la nos controllers.
+productsRoutes.post("/", myMiddleware, productsController.create);
 
 export { productsRoutes };
