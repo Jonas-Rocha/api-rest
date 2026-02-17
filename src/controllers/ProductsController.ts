@@ -1,6 +1,7 @@
 // Arquivo com letra inicial maiúscula pois estou criando uma classe.
 
 import { Request, Response } from "express";
+import { AppError } from "../utils/AppError";
 
 class ProductsController {
   //Boas praticas para controllers. Usar no máximo 5 métodos.
@@ -22,7 +23,9 @@ class ProductsController {
   create(request: Request, response: Response) {
     const { name, price } = request.body;
 
-    throw new Error("Erro ao tentar criar um produto!");
+    // throw new Error("Erro ao tentar criar um produto!");
+
+    // throw new AppError("Erro ao criar o produto!");
 
     response.status(201).json({ name, price, user_id: request.user_id });
   }

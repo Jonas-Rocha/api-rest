@@ -89,6 +89,7 @@ agumas bibliotecas precisam que eu instale a tipagem delas separadamente. o expr
 import express, { Request, Response, NextFunction } from "express";
 import { myMiddleware } from "./middlewares/my-middleware"; //não precisa colocar a extensão do arquivo no TYPESCRIPT.
 import { routes } from "./routes/index";
+import { AppError } from "./utils/AppError";
 
 // estou criando a variavel da porta pois se eu quiser mudar futuramente basta eu mudar o valor desta variavel que todo o resto sera mudado
 const PORT = 3333;
@@ -101,9 +102,17 @@ app.use(express.json());
 //esse app.use(routes) esta chamando o index.ts(routes), e o index.ts(routes) vai chamar o products-routes.ts(routes)
 app.use(routes);
 
+/**
+ * 400 (Bad Request): Erro do cliente.
+ * 500 (Internal Server Error): Erro interno do servidor.
+ */
+
 //o tratamento de erros deve vir sempre por ultimo no código pois ele consegue capturar qualquer exceção que acontecer nos blocos de código acima.
 app.use(
   (error: any, request: Request, response: Response, next: NextFunction) => {
+    if (error instanceof AppError) {
+      return response.status(error.statusCode).json({ message: error.message });
+    }
     response.status(500).json({ message: error.message });
   },
 );
