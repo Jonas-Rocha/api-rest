@@ -2,6 +2,7 @@
 
 import { Request, Response } from "express";
 import { AppError } from "../utils/AppError";
+import { z } from "zod";
 
 class ProductsController {
   //Boas praticas para controllers. Usar no máximo 5 métodos.
@@ -21,23 +22,28 @@ class ProductsController {
   }
 
   create(request: Request, response: Response) {
-    const { name, price } = request.body;
+    const bodySchema = z.object({
+      name: z.string(),
+      price: z.number(),
+    });
 
-    if (!name) {
-      throw new AppError("Nome do produto é obrigatório!");
-    }
+    const { name, price } = bodySchema.parse(request.body);
 
-    if (name.trim().length < 6) {
-      throw new AppError("Nome do produto precisa ter pelo menos 6 caracteres");
-    }
+    // if (!name) {
+    //   throw new AppError("Nome do produto é obrigatório!");
+    // }
 
-    if (!price) {
-      throw new AppError("Preço do produto é obrigatório!");
-    }
+    // if (name.trim().length < 6) {
+    //   throw new AppError("Nome do produto precisa ter pelo menos 6 caracteres");
+    // }
 
-    if (price < 0) {
-      throw new AppError("Preço do produto não pode ser menor do que zero!");
-    }
+    // if (!price) {
+    //   throw new AppError("Preço do produto é obrigatório!");
+    // }
+
+    // if (price < 0) {
+    //   throw new AppError("Preço do produto não pode ser menor do que zero!");
+    // }
 
     // throw new Error("Erro ao tentar criar um produto!");
 
@@ -55,3 +61,15 @@ export { ProductsController };
     O instrutor demonstra a criação dos métodos de index e create no controller, explicando a importância de ter acesso à requisição e resposta.
      Por fim, é mostrado como importar e utilizar o controller nas rotas, mantendo a organização do código.
  */
+
+/*
+     SOBRE O SCHEMA VALIDATION:
+
+     Aprenda o que é Schema Validation, 
+     como ele permite criar regras para dados recebidos ou manipulados. 
+     Entenda como definir expectativas de valores e formatos, 
+     validando propriedades e seus conteúdos através de um esquema. 
+     Exemplos práticos de validação de e-mail e senha.
+
+
+      */
