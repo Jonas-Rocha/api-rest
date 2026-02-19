@@ -26,7 +26,7 @@ class ProductsController {
       name: z.string(),
       price: z.number(),
     });
-
+    //quando os dados não bate com a validação do zod, o proprio zod lança uma exceção.
     const { name, price } = bodySchema.parse(request.body);
 
     // if (!name) {

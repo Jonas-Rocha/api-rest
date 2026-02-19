@@ -87,19 +87,16 @@ agumas bibliotecas precisam que eu instale a tipagem delas separadamente. o expr
 */
 
 import express, { Request, Response, NextFunction } from "express";
-import { myMiddleware } from "./middlewares/my-middleware"; //não precisa colocar a extensão do arquivo no TYPESCRIPT.
 import { routes } from "./routes/index";
 import { AppError } from "./utils/AppError";
+import { ZodError } from "zod";
 
-// estou criando a variavel da porta pois se eu quiser mudar futuramente basta eu mudar o valor desta variavel que todo o resto sera mudado
 const PORT = 3333;
 
 const app = express();
 
 app.use(express.json());
 
-//tenho que chamar as rotas aqui para que funcione.
-//esse app.use(routes) esta chamando o index.ts(routes), e o index.ts(routes) vai chamar o products-routes.ts(routes)
 app.use(routes);
 
 /**
@@ -112,6 +109,13 @@ app.use(
   (error: any, request: Request, response: Response, next: NextFunction) => {
     if (error instanceof AppError) {
       return response.status(error.statusCode).json({ message: error.message });
+    }
+
+    //Capturando o erro de validação com zod.
+    if (error instanceof ZodError) {
+      return response
+        .status(400)
+        .json({ message: "Validation error!", issues: error.format() });
     }
     response.status(500).json({ message: error.message });
   },
