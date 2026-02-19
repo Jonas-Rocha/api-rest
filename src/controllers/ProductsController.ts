@@ -24,7 +24,7 @@ class ProductsController {
   create(request: Request, response: Response) {
     const bodySchema = z.object({
       name: z.string(),
-      price: z.number(),
+      price: z.number().nullish(), //nullish serve para deixar de ser obrigatório o dado. dizer que pode ser nulo ou undefined.
     });
     //quando os dados não bate com a validação do zod, o proprio zod lança uma exceção.
     const { name, price } = bodySchema.parse(request.body);
@@ -54,22 +54,3 @@ class ProductsController {
 }
 
 export { ProductsController };
-
-/*
-    Neste trecho, são separadas as rotas da aplicação em um arquivo específico e discute-se a criação de um controller para cada rota. 
-    É destacada a importância de separar as responsabilidades de roteamento e execução de ações. 
-    O instrutor demonstra a criação dos métodos de index e create no controller, explicando a importância de ter acesso à requisição e resposta.
-     Por fim, é mostrado como importar e utilizar o controller nas rotas, mantendo a organização do código.
- */
-
-/*
-     SOBRE O SCHEMA VALIDATION:
-
-     Aprenda o que é Schema Validation, 
-     como ele permite criar regras para dados recebidos ou manipulados. 
-     Entenda como definir expectativas de valores e formatos, 
-     validando propriedades e seus conteúdos através de um esquema. 
-     Exemplos práticos de validação de e-mail e senha.
-
-
-      */
