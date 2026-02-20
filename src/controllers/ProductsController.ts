@@ -23,8 +23,11 @@ class ProductsController {
 
   create(request: Request, response: Response) {
     const bodySchema = z.object({
-      name: z.string({ required_error: "Name is required!" }), // Customizando a mensagem de erro com a propriedade required_error
-      price: z.number().nullish(), //nullish serve para deixar de ser obrigatório o dado. dizer que pode ser nulo ou undefined.
+      name: z
+        .string({ required_error: "Name is required!" })
+        .trim()
+        .min(6, { message: "Name must be 6 or more characters" }), // Customizando a mensagem de erro com a propriedade required_error
+      price: z.number().positive({ message: "Price must be positive" }), //nullish serve para deixar de ser obrigatório o dado. dizer que pode ser nulo ou undefined.
     });
     //quando os dados não bate com a validação do zod, o proprio zod lança uma exceção.
     const { name, price } = bodySchema.parse(request.body);
